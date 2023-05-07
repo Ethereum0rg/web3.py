@@ -58,7 +58,7 @@ with open("./README.md") as readme:
     long_description = readme.read()
 
 setup(
-    name="web3",
+    name="web3py",
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
     version="6.3.0",
     description="""web3.py""",
